@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #num {
+      border: 1px solid black;
+      width: 25%;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    答案为：
+    <div id="num">
+      
+    </div>
+  </div>
+ 
+  <script>
+   
+     function a (x,y,z){
+       var num = document.getElementById('num');
+       // 求任意数的任意次方
+       var x = parseInt(window.prompt('请输入底数')),
+           y = parseInt(window.prompt('请输入指数')),
+           nub = 0,
+           c = x;
+       if (y == 0) {
+         console.log(1);
+       } else if (y == 1) {
+         console.log(c);
+       } else {
+         {
+           nub = (x *= x);
+           for (var i = 1; i < y - 1; i ++) {
+             nub *= c;
+           }
+           num.innerHTML = nub;
+         }
+
+       }
+     }
+  
+  </script>
+</body>
+
+</html>

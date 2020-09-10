@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">发送ajax请求</button>
+    <script>
+        var btn = document.getElementById('btn');
+        btn.onclick = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'http://localhost:3000/error');
+            xhr.send();
+            xhr.onload = function () {
+                
+                console.log(xhr.responseText);
+                if(xhr.status == 400){
+                    alert('请求出错');
+                }
+            }
+            xhr.onerror = function (){
+                alert('断网 ');
+            }
+
+        }
+    </script>
+</body>
+
+</html>

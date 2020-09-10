@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p><input type="text" id="username"></p>
+    <p><input type="password" id="age"></p>
+    <p><input type="button" value="提交" id="btn"></p>
+
+    <script>
+        var btn = document.getElementById('btn');
+        var username = document.getElementById('username');
+        var age = document.getElementById('age');
+        btn.onclick = function () {
+            var xhr = new XMLHttpRequest();
+            // 创建ajax对象
+            var nameValue = username.value;
+            var ageValue = age.value;
+            // 获取用户在文本框输入的值
+            var params = 'username='+ nameValue + '&age=' + ageValue;
+            // 拼接对象
+            xhr.open('get', 'http://localhost:3000/get?'+params);
+            xhr.send();
+            // 发送请求
+            xhr.onload = function(){
+                console.log(xhr.responseText);
+            }
+            // 获取响应
+        }
+    </script>
+</body>
+
+</html>

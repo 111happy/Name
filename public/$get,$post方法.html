@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id='btn'>发送请求</button>
+    <script src="js/jquery-3.5.1.js"></script>
+    <script>
+        $('#btn').on('click',function (){
+            // $.get("/base", 'name = zhangsan & age =30',
+            //     function (response) { 
+            //         console.log(response)
+            //     },
+                
+            // );
+            $.post("/base", 
+                function (response) {
+                    // 没有传递信息给服务器端 服务器返回{}
+                    console.log(response);
+                },
+                "dataType"
+            );
+            })
+    </script>
+</body>
+</html>

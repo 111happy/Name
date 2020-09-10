@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id = 'form'>
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="button" id = 'btn' value="提交"/>
+    </form>
+
+
+    <script>
+        var form = document.getElementById('form');
+        var btn = document.getElementById('btn');
+        
+
+        btn.onclick = function (){
+
+            var formData = new FormData(form);
+            // get('key') 获取表单对象属性的值
+            // set('key') 设置表单对象属性的值
+            
+            console.log(formData.get('username'));
+            // 属性存在,会覆盖
+            formData.set('username','it');
+            formData.append('username',"itt");
+            // 如果设置表单的属性不存在，会创建
+            formData.set('age',(Math.ceil(Math.random()*100)));
+
+            // 删除某个属性: formData.delete('age');
+
+            
+            var xhr = new XMLHttpRequest();
+            
+            xhr.open('post','http://localhost:3000/formData');
+
+            xhr.send(formData);
+
+            xhr.onload = function (){
+                if(xhr.status == 200){
+                    console.log(xhr.responseText);
+                }
+            }
+
+            var f =new FormData();
+            f.append('sex','man');
+            console.log(f.get('sex'));
+        }
+
+        
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id='btn1'>点我发送请求</button>
+    <button id='btn2'>点我发送请求</button>
+    <!-- <script src="js/ajax.js"></script>
+    <script>
+        ajax({
+            url : "http://localhost:3001/test",
+            type : "get",
+            success : function (a){
+                console.log(a);
+            }
+        })
+    </script> -->
+
+    <script>
+        // function fn1(data) {
+        //     console.log('客户端的fn函数被调用了')
+        //     console.log(data);
+        // }
+    </script>
+    <!-- 1.将非同源服务器端的请求地址写在script标签的src属性中 -->
+    <!-- <script src="http://localhost:3001/test"></script> -->
+    <script>
+        var btn1 = document.getElementById('btn1');
+        var btn2 = document.getElementById('btn2');
+        btn1.onclick = function () {
+            jsonp({
+            // 请求地址
+            url : 'http://localhost:3001/better',
+            data : {
+                name : 'lisi',
+                age : 30
+            },
+            success : function (data){
+                console.log(123);
+                console.log(data);
+            }
+        });
+        }
+        btn2.onclick = function () {
+            jsonp({
+            // 请求地址
+            url : 'http://localhost:3001/better',
+            success : function (data){
+                console.log(456);
+                console.log(data);
+            }
+        });
+        }
+        // 封装
+        function jsonp (options){
+            // 创建script标签
+            var script = document.createElement("script");
+
+            var params = '';
+            for (var attr in options.data){
+                params += '&' + attr + "=" + options.data[attr];
+            }
+            // 创建一个随机函数名 如:myJsonp0123456
+            var fnName = 'myJsonp' + Math.random().toString().replace('.',''); 
+            //变成全局函数
+            window[fnName] = options.success; 
+            
+            // 设置src属性
+            script.src = options.url + '?callback='+ fnName + params;
+            // 将scr标签追加到页面
+            document.body.appendChild(script);
+            
+            script.onload = function (){
+                // 删除src标签
+                document.body.removeChild(script);
+            }
+        }
+      
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        var xhr =new XMLHttpRequest();
+        // 0
+        console.log(xhr.readyState);
+        xhr.open('get','http://localhost:3000/readystate');
+        // 1
+        console.log(xhr.readyState);
+        // 当ajax状态码发生改变时触发
+        xhr.onreadystatechange = function(){
+            // 2
+            // 3
+            // 4
+            console.log(xhr.readyState);
+            if(xhr.readyState == 4){
+                console.log(xhr.responseText);
+            }
+           
+        }
+        xhr.send();
+        
+    </script>
+</body>
+</html>

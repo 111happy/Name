@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">发送请求</button>
+    <div id = "container"></div>
+    <script>
+        var btn = document.getElementById('btn');
+        var container = document.getElementById('container');
+        btn.onclick = function (){
+            var xhr = new XMLHttpRequest();
+            //设置请求行
+            xhr.open('get','/xml');
+            //设置请求体
+            xhr.send();
+            xhr.onload = function(){
+                // xhr.responseXML 获取服务器端返回的xml数据
+                var xmlDoc = xhr.responseXML;
+                console.log(xmlDoc.getElementsByTagName('title')[0].innerHTML);
+                var title = xmlDoc.getElementsByTagName('title')[0].innerHTML;
+                container.innerHTML = title;
+            }
+        }
+    </script>
+</body>
+</html>

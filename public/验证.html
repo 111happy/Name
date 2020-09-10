@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/js/jquery-3.5.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <style>
+        p:not(:empty) {
+            padding: 15px;
+        }
+
+        .container {
+            padding-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label>邮箱地址</label>
+            <input type="email" class="form-control" placeholder="请输入邮箱地址" id="email">
+        </div>
+        <!-- 错误 bg-danger 正确 bg-success -->
+        <p id="info"></p>
+    </div>
+
+    <script src="js/ajax.js"></script>
+    <script>
+        var emailInp = document.getElementById('email');
+        var info = document.getElementById('info');
+
+        emailInp.onblur = function () {
+            var email = this.value;
+            var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+            if (!reg.test(email)) {
+                info.innerHTML = "请输入符合规则的邮箱地址";
+                info.className = 'bg-danger';
+                return;
+
+            };
+            
+
+            ajax({
+                type : 'get',
+                url : 'http://localhost:3000/verifyEmailAdress',
+                data : {
+                    email : email
+                },
+                success : function (result){
+                    console.log(result);
+                    info.innerHTML = result.message;
+                    info.className = 'bg-success';
+                },
+                error : function(result){
+                    console.log(result);
+                    info.innerHTML = result.message;
+                    info.className = 'bg-danger';
+                }
+            });
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+        .container {
+            padding-top: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-inline">
+            <div class='form-group'>
+                <select name="" id="province" class='form-control'>
+
+                </select>
+            </div>
+            <div class='form-group'>
+                <select name="" id="city" class='form-control'>
+                    <option value="">请选择城市</option>
+                </select>
+            </div>
+            <div class='form-group'>
+                <select name="" id="area" class='form-control'>
+                    <option value="">请选择城区县城</option>
+                </select>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <script src="js/ajax.js"></script>
+    <script src="js/template-web.js"></script>
+    <script src='js/jquery-3.5.1.js'></script>
+    <script type="text/html" id='provinceTpl'>
+        <option value="">请选择省份</option>
+        {{each province}}
+        <option value="{{$value.id}}">{{$value.name}}</option>
+        {{/each}}
+    </script>
+
+    <script type="text/html" id='cityTpl'>
+        <option value="">请选择城市</option>
+        {{each city}}
+        <option value="{{$value.id}}">{{$value.name}}</option>
+        {{/each}}
+    </script>
+
+    <script type="text/html" id='areaTpl'>
+        <option value="">请选择城区县城</option>
+        {{each area}}
+        <option value="{{$value.id}}">{{$value}}</option>
+        {{/each}}
+    </script>
+    <script>
+        var province = document.getElementById('province');
+        var city = document.getElementById('city');
+        var area = document.getElementById('area');
+
+        province.onchange = function () {
+            // 获取省份id
+            var pid = this.value;
+
+            // 根据省份id获取城市信息
+
+            var html = template('areaTpl', { area: [] });
+            area.innerHTML = html;
+
+            ajax({
+                type: "get",
+                url: "/province",
+                dataType: 'JSON',
+                data: {
+                    id: pid
+                },
+
+                success: function (data) {
+                    
+                    var array = eval("('+ data +')");
+                    // 获取省份
+                    var a = data[pid - 1]["city"];
+
+                    // console.log(a);
+
+                    var html = template('cityTpl', { city: a });
+
+                    city.innerHTML = html;
+                }
+            });
+
+            city.onchange = function () {
+                // 获取城市id
+                var cid = this.value;
+                console.log(cid);
+
+                ajax({
+                    type: "get",
+                    url: "/province",
+                    dataType: 'JSON',
+                    data: {
+                        id: cid
+                    },
+                    success: function (data) {
+                        var json = eval("('+ data +')")
+                        var b = data[pid - 1]['city'][cid - 1]['districtAndCounty'];
+                        // console.log(b);
+                        var html = template('areaTpl', { area: b });
+                        area.innerHTML = html;
+                    }
+                })
+            }
+
+        };
+
+        ajax({
+            type: "get",
+            url: "http://localhost:3000/province",
+
+            success: function (data) {
+                var html = template('provinceTpl', { province: data });
+                province.innerHTML = html;
+                // console.log(data);
+                
+            }
+        });
+    </script>
+</body>
+
+</html>
